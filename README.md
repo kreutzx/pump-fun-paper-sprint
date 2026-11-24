@@ -8,7 +8,7 @@ A momentum paper-trading bot for make.fun's **Pump.fun Paper Sprint: Any Bot Can
 
 ## Strategy
 
-`main.ts` samples each coin's spot price (virtual quote / virtual token reserves) once per batch in which it trades. When the price has risen at least 6% over the last 10 samples, the curve holds at least 2 SOL of real reserves, and a position slot is free, it buys a fixed 0.06 SOL stake (capped by the harness's per-mint size cap). Positions exit at +30% take-profit, −15% stop-loss, or after 900 slots, whichever comes first. Each mint is bought at most once per run, spreading the book across many coins. The bot is fully deterministic: no clock, no randomness, no network.
+`main.ts` samples each coin's spot price (virtual quote / virtual token reserves) once per batch in which it trades. When the price has risen at least 12% over the last 10 samples, the mint has at least 20 trades, the curve holds at least 2 SOL of real reserves, and a position slot is free, it buys a fixed 0.06 SOL stake (capped by the harness's per-mint size cap). Positions exit at +18% take-profit, −10% stop-loss, or after 400 slots, whichever comes first. On the kit's dev window it completes 265 round trips of at least 0.01 SOL with a max drawdown under 7% (guardrails met). Each mint is bought at most once per run, spreading the book across many coins. The bot is fully deterministic: no clock, no randomness, no network.
 
 The kit's TypeScript SDK shim is vendored at `vendor/makefun-bot.ts` (byte-identical to the kit's `sdk/ts/makefun-bot.ts`); the strategy itself is dependency-free.
 

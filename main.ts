@@ -24,13 +24,16 @@ const STAKE_LAMPORTS = (LAMPORTS_PER_SOL * 6n) / 100n; // 0.06 SOL per entry
 const MIN_BUY_LAMPORTS = LAMPORTS_PER_SOL / 100n; // 0.01 SOL: the guardrail round-trip floor
 const MIN_REAL_RESERVE = LAMPORTS_PER_SOL * 2n; // only trade curves holding >= 2 SOL real
 const LOOKBACK = 10; // samples of momentum history required and compared against
-const MIN_TRADES = 8; // ignore curves with almost no flow: their samples are noise
+const MIN_TRADES = 20; // ignore curves with thin flow: their samples are noise
 const SAMPLE_RING = 16; // samples kept per mint
-const MOMENTUM_MIN = 0.06; // +6% over the lookback window triggers an entry
-const TAKE_PROFIT = 1.3; // exit when position value reaches 1.30x its cost
-const STOP_LOSS = 0.85; // exit when position value falls to 0.85x its cost: pump curves that
+const MOMENTUM_MIN = 0.12; // +12% over the lookback window triggers an entry: the first
+// local grade showed +6% entries mostly bought local tops (win rate under 0.30), so the
+// trigger now demands a move strong enough to still be running after the 2-slot latency
+const TAKE_PROFIT = 1.18; // exit when position value reaches 1.18x its cost: bank the
+// move early instead of waiting for +30% that pump curves rarely sustain
+const STOP_LOSS = 0.9; // exit when position value falls to 0.90x its cost: pump curves that
 // break down rarely recover, so the stop stays tighter than the take-profit is wide
-const MAX_HOLD_SLOTS = 900; // exit regardless after this many slots
+const MAX_HOLD_SLOTS = 400; // exit regardless after this many slots
 const STALE_SLOTS = 6000; // forget mints with no trade for this many slots
 const BUY_SLIPPAGE_BPS = 1_000;
 const SELL_SLIPPAGE_BPS = 1_500;
